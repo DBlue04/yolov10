@@ -3,15 +3,23 @@ import supervision as sv
 from ultralytics import YOLOv10
 from sklearn.metrics import precision_score, recall_score, f1_score
 from tqdm import tqdm
+import os
 
 model = YOLOv10('runs/detect/train/weights/best.pt')
 
 test_dataset = sv.DetectionDataset.from_yolo(
-    images_directory_path='/home/kelvin/my_project/fitus/Junior - Semester 3/code/yolov10/VehiclesDetectionDataset/test/images',
-    annotations_directory_path='/home/kelvin/my_project/fitus/Junior - Semester 3/code/yolov10/VehiclesDetectionDataset/test/labels',
+    images_directory_path=os.path.join(os.getcwd(), 'VehiclesDetectionDataset', 'test', 'images'),
+    annotations_directory_path=os.path.join(os.getcwd(), 'VehiclesDetectionDataset', 'test', 'labels'),
     data_yaml_path='data.yaml'
 )
+# images_directory_path=os.path.join(os.getcwd(), 'yolov10', 'VehiclesDetectionDataset', 'test', 'images')
+# print(images_directory_path)
 
+# test_dataset1 = sv.DetectionDataset.from_yolo(
+#     images_directory_path='/home/kelvin/my_project/fitus/Junior - Semester 3/code/yolov10/VehiclesDetectionDataset/test/images',
+#     annotations_directory_path='/home/kelvin/my_project/fitus/Junior - Semester 3/code/yolov10/VehiclesDetectionDataset/test/labels',
+#     data_yaml_path='data.yaml'
+# )
 def iou(box1, box2):
     x1, y1, x2, y2 = box1
     x1g, y1g, x2g, y2g = box2
@@ -97,7 +105,6 @@ def evaluate_model_on_test_set():
 
     return precision, recall, f1
 
-# Main function
 if __name__ == "__main__":
     precision, recall, f1 = evaluate_model_on_test_set()
     

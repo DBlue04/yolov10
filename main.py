@@ -5,7 +5,7 @@ import numpy as np
 from tempfile import NamedTemporaryFile
 import supervision as sv
 from ultralytics import YOLOv10
-
+# import os
 
 with open("evaluation.txt", "r") as f:
     evaluation_metrics = f.read()
